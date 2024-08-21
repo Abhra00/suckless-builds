@@ -241,6 +241,9 @@ static const char *unmountcmd[]    = { "unmounter",  NULL };
 static const char *netmancmd[]     = { "dmenu-netman",  NULL };
 static const char *bluemancmd[]    = { "dmenu-bluetooth",  NULL };
 
+/* wallchangercmd */
+static const char *wallcmd[]       = { "dmenu-wallpaper",  NULL };
+
 static const Key keys[] = {
 	/* modifier                     key        	function        argument */
         TAGKEYS(                        XK_1,                      	0)
@@ -300,6 +303,7 @@ static const Key keys[] = {
 	{ MODKEY,			XK_F3,          spawn,          {.v = unmountcmd } },
 	{ MODKEY,			XK_F4,          spawn,          {.v = netmancmd } },
 	{ MODKEY,			XK_F5,          spawn,          {.v = bluemancmd } },
+	{ MODKEY,			XK_F6,          spawn,          {.v = wallcmd } },
         { MODKEY|ControlMask,           XK_comma,       cyclelayout,    {.i = -1 } },
         { MODKEY|ControlMask,           XK_period,      cyclelayout,    {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_q,      	quit,           {0} },
