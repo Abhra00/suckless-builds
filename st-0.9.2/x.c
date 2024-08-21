@@ -95,6 +95,7 @@ typedef struct {
 	int w, h; /* window width and height */
 	int ch; /* char height */
 	int cw; /* char width  */
+	int cyo; /* char y offset */
 	int mode; /* window state/mode flags */
 	int cursor; /* cursor style */
 } TermWindow;
@@ -1064,6 +1065,7 @@ xloadfonts(const char *fontstr, double fontsize)
 	/* Setting character width and height. */
 	win.cw = ceilf(dc.font.width * cwscale);
 	win.ch = ceilf(dc.font.height * chscale);
+	win.cyo = ceilf(dc.font.height * (chscale - 1) / 2);
 
 	FcPatternDel(pattern, FC_SLANT);
 	if (!disableitalic)
@@ -1485,7 +1487,7 @@ xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len, int x
 	FcCharSet *fccharset;
 	int i, f, numspecs = 0;
 
-	for (i = 0, xp = winx, yp = winy + font->ascent; i < len; ++i) {
+	for (i = 0, xp = winx, yp = winy + font->ascent + win.cyo; i < len; ++i) {
 		/* Fetch rune and mode for current glyph. */
 		rune = glyphs[i].u;
 		mode = glyphs[i].mode;
@@ -1510,7 +1512,7 @@ xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len, int x
 				font = &dc.bfont;
 				frcflags = FRC_BOLD;
 			}
-			yp = winy + font->ascent;
+			yp = winy + font->ascent + win.cyo;
 		}
 
 		if (mode & ATTR_BOXDRAW) {
@@ -1792,7 +1794,7 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 		if (base.ustyle != 3) {
 			//XftDrawRect(xw.draw, fg, winx, winy + dc.font.ascent + 1, width, 1);
 			XFillRectangle(xw.dpy, XftDrawDrawable(xw.draw), ugc, winx,
-				winy + dc.font.ascent + 1, width, wlw);
+				winy + win.cyo + dc.font.ascent + 1, width, wlw);
 		} else if (base.ustyle == 3) {
 			int ww = win.cw;//width;
 			int wh = dc.font.descent - wlw/2 - 1;//r.height/7;
@@ -2103,7 +2105,7 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
         }
 
         if (base.mode & ATTR_STRUCK) {
-            XftDrawRect(xw.draw, fg, winx, winy + 2 * dc.font.ascent / 3,
+            XftDrawRect(xw.draw, fg, winx, winy + win.cyo + 2 * dc.font.ascent / 3,
                         width, 1);
         }
     }
