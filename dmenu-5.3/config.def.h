@@ -7,6 +7,8 @@ static unsigned int lines          = 8;  	/* -l option; if nonzero, dmenu uses v
 static unsigned int lineheight     = 40; 	/* -h option; minimum height of a menu line */
 static unsigned int min_lineheight = 8;         /* Minimum line height */
 static unsigned int border_width   = 0; 	/* Size of the window border */
+static const int vertpad 	   = 10;        /* vertical padding of bar */
+static const int sidepad 	   = 10;        /* horizontal padding of bar */
 static int colorprompt 		   = 0;         /* -p  option; if 1, prompt uses SchemeSel, otherwise SchemeNorm */
 static char *prompt      	   = NULL;      /* -p  option; prompt to the left of input field */
 

@@ -46,6 +46,8 @@ static int dmy = 0; /* put dmenu at this y offset (measured from the bottom if t
 static unsigned int dmw = 0; /* make dmenu this wide */
 static int inputw = 0, promptw, passwd = 0;
 static int lrpad; /* sum of left and right padding */
+static int vp;    /* vertical padding for bar */
+static int sp;    /* side padding for bar */
 static size_t cursor;
 static struct item *items = NULL;
 static struct item *matches, *matchend;
@@ -774,7 +776,7 @@ setup(void)
         swa.border_pixel = 0;
         swa.colormap = cmap;
 	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask;
-	win = XCreateWindow(dpy, root, x, y, mw, mh, border_width,
+	win = XCreateWindow(dpy, root, x + sp, y + vp, mw - 2 * sp, mh, border_width,
                             depth, CopyFromParent, visual,
                             CWOverrideRedirect | CWBackPixel | CWBorderPixel | CWColormap | CWEventMask, &swa);
 	
@@ -889,6 +891,9 @@ main(int argc, char *argv[])
 	if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 	lrpad = drw->fonts->h;
+
+	sp = sidepad;
+	vp = (topbar == 1) ? vertpad : - vertpad;
 
 #ifdef __OpenBSD__
 	if (pledge("stdio rpath", NULL) == -1)
