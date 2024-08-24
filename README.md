@@ -1,8 +1,8 @@
 # This is the fork of my suckless softwares to check how far I can go with manual patching
-# NOTE
-  # I will not maintain this fork further because It is too much of a hassle so I will move to bakkeby's flexipatch
- 
-  # Installation of suckless software
+
+# I will maintain this fork further but I need your support guys
+
+# Installation of suckless software
   
   ```bash
 make
