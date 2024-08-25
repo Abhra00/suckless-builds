@@ -1,6 +1,6 @@
 # This is the fork of my suckless softwares to check how far I can go with manual patching
 
-# I will maintain this fork further but I need your support guys
+# I will not maintain this fork further because I moved to bspwm
 
 # Installation of suckless software
   
